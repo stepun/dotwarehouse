@@ -60,6 +60,8 @@ return [
                 'user.my-avatar.create',
                 'user.my-avatar.delete',
                 'user.my-avatar.view',
+                'user.view',
+                'user.list',
             ],
             UserRole::ROLE_GUEST      => [
                 'account.activate.request',
