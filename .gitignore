@@ -39,3 +39,6 @@ composer.lock
 
 .phpunit.result.cache
 .phpcs-cache
+/log/
+*.log
+

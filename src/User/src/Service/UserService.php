@@ -65,7 +65,7 @@ class UserService implements UserServiceInterface
      * @throws ConflictException
      * @throws NotFoundException
      */
-    public function createUser(array $data = []): User
+    public function  createUser(array $data = []): User
     {
         if ($this->exists($data['identity'])) {
             throw new ConflictException(Message::DUPLICATE_IDENTITY);

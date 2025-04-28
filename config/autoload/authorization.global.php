@@ -52,6 +52,9 @@ return [
                 'user.role.view',
                 'error.report',
                 'home',
+                'warehouses.list',
+                'warehouse.show',
+                'warehouse.create',
             ],
             UserRole::ROLE_USER       => [
                 'user.my-account.delete',
@@ -62,6 +65,9 @@ return [
                 'user.my-avatar.view',
                 'user.view',
                 'user.list',
+                'warehouses.list',
+                'warehouse.show',
+                'warehouse.create',
             ],
             UserRole::ROLE_GUEST      => [
                 'account.activate.request',
@@ -76,6 +82,7 @@ return [
                 'error.report',
                 'home',
                 'user.create',
+                'warehouses.list',
             ],
         ],
     ],

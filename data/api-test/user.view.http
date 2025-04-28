@@ -1,0 +1,23 @@
+### Get access token
+POST {{URL}}/security/generate-token HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "grant_type": "password",
+  "client_id": "frontend",
+  "client_secret": "frontend",
+  "scope": "api",
+  "username": "test@dotkernel.com",
+  "password": "dotkernel"
+}
+
+> {%
+    client.global.set("accessToken", response.body.access_token);
+%}
+
+### Get user by UUID
+GET {{URL}}/user/14e01826-8c51-487e-9b9d-bc72adab7a32
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
