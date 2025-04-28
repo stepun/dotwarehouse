@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use League\OAuth2\Server\Entities\UserEntityInterface;
+use Ramsey\Uuid\UuidInterface;
 
 use function bin2hex;
 use function md5;
@@ -32,6 +33,12 @@ class User extends AbstractEntity implements UserEntityInterface
         self::STATUS_PENDING,
         self::STATUS_ACTIVE,
     ];
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="uuid_binary_ordered_time", unique=true)
+     */
+    protected UuidInterface $uuid;
 
     #[ORM\OneToOne(targetEntity: UserAvatar::class, mappedBy: "user", cascade: ['persist', 'remove'])]
     protected ?UserAvatar $avatar = null;
@@ -72,6 +79,17 @@ class User extends AbstractEntity implements UserEntityInterface
 
         $this->created();
         $this->renewHash();
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     public function getIdentity(): string

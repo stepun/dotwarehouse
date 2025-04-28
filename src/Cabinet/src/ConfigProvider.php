@@ -43,6 +43,10 @@ class ConfigProvider
                 WarehouseCollectionHandler::class       => AttributedServiceFactory::class,
                 WarehouseService::class    => AttributedServiceFactory::class,
                 WarehouseRepository::class => AttributedRepositoryFactory::class,
+                \Api\Cabinet\Service\CabinetService::class => \Api\Cabinet\Factory\CabinetServiceFactory::class,
+                \Api\Cabinet\Service\WarehouseService::class => \Api\Cabinet\Factory\WarehouseServiceFactory::class,
+                \Api\Cabinet\Repository\CabinetRepository::class => \Api\Cabinet\Factory\CabinetRepositoryFactory::class,
+                \Api\Cabinet\Repository\WarehouseRepository::class => \Api\Cabinet\Factory\WarehouseRepositoryFactory::class,
             ],
             'aliases'   => [
                 WarehouseServiceInterface::class     => WarehouseService::class,

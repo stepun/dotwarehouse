@@ -15,6 +15,7 @@ use Api\User\Handler\UserCollectionHandler;
 use Api\User\Handler\UserHandler;
 use Api\User\Handler\UserRoleCollectionHandler;
 use Api\User\Handler\UserRoleHandler;
+use Api\User\Handler\ClientRegistrationHandler;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 
@@ -170,6 +171,10 @@ class RoutesDelegator
             AccountActivateHandler::class,
             'account.activate.request'
         );
+
+        $app->post('/api/v1/client/register', [
+            ClientRegistrationHandler::class,
+        ], 'api.client.register');
 
         return $app;
     }

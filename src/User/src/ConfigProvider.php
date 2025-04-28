@@ -44,10 +44,9 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies'     => $this->getDependencies(),
-            'doctrine'         => $this->getDoctrineConfig(),
-            MetadataMap::class => $this->getHalConfig(),
-            'templates'        => $this->getTemplates(),
+            'dependencies' => $this->getDependencies(),
+            'templates'    => $this->getTemplates(),
+            'routes'      => $this->getRoutes(),
         ];
     }
 
@@ -80,6 +79,9 @@ class ConfigProvider
                 UserResetPasswordRepository::class => AttributedRepositoryFactory::class,
                 UserRoleRepository::class          => AttributedRepositoryFactory::class,
                 UserAvatarRepository::class        => AttributedRepositoryFactory::class,
+                \Api\User\Service\ClientRegistrationService::class => \Api\User\Factory\ClientRegistrationServiceFactory::class,
+                \Api\User\InputFilter\ClientRegistrationInputFilter::class => \Api\User\Factory\ClientRegistrationInputFilterFactory::class,
+                \Api\User\Handler\ClientRegistrationHandler::class => \Api\User\Factory\ClientRegistrationHandlerFactory::class,
             ],
             'aliases'    => [
                 UserAvatarServiceInterface::class => UserAvatarService::class,
@@ -127,5 +129,11 @@ class ConfigProvider
                 ],
             ],
         ];
+    }
+
+    public function getRoutes(): array
+    {
+        // Implementation of getRoutes method
+        return [];
     }
 }

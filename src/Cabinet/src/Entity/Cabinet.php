@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Api\Cabinet\Entity;
 
+use Api\User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="warehouse")
+ * @ORM\Table(name="cabinet")
  */
-class Warehouse
+class Cabinet
 {
     /**
      * @ORM\Id
@@ -20,25 +21,14 @@ class Warehouse
     protected UuidInterface $uuid;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cabinet::class)
-     * @ORM\JoinColumn(name="cabinet_uuid", referencedColumnName="uuid", nullable=false)
-     */
-    protected Cabinet $cabinet;
-
-    /**
      * @ORM\Column(type="string", length=191)
      */
     protected string $name;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=20)
      */
-    protected string $type;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected string $identifier;
+    protected string $status;
 
     /**
      * @ORM\Column(type="datetime", name="created_at")
@@ -50,6 +40,12 @@ class Warehouse
      */
     protected ?\DateTime $updatedAt = null;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(name="user_uuid", referencedColumnName="uuid", nullable=false)
+     */
+    protected User $user;
+
     public function getUuid(): UuidInterface
     {
         return $this->uuid;
@@ -58,17 +54,6 @@ class Warehouse
     public function setUuid(UuidInterface $uuid): self
     {
         $this->uuid = $uuid;
-        return $this;
-    }
-
-    public function getCabinet(): Cabinet
-    {
-        return $this->cabinet;
-    }
-
-    public function setCabinet(Cabinet $cabinet): self
-    {
-        $this->cabinet = $cabinet;
         return $this;
     }
 
@@ -83,25 +68,14 @@ class Warehouse
         return $this;
     }
 
-    public function getType(): string
+    public function getStatus(): string
     {
-        return $this->type;
+        return $this->status;
     }
 
-    public function setType(string $type): self
+    public function setStatus(string $status): self
     {
-        $this->type = $type;
-        return $this;
-    }
-
-    public function getIdentifier(): string
-    {
-        return $this->identifier;
-    }
-
-    public function setIdentifier(string $identifier): self
-    {
-        $this->identifier = $identifier;
+        $this->status = $status;
         return $this;
     }
 
@@ -126,4 +100,15 @@ class Warehouse
         $this->updatedAt = $updatedAt;
         return $this;
     }
-}
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+} 

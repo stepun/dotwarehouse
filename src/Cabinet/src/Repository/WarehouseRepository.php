@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Api\Cabinet\Repository;
 
 use Api\App\Helper\PaginationHelper;
@@ -8,10 +10,17 @@ use Api\Cabinet\Collection\WarehouseCollection;
 use Api\Cabinet\Entity\Warehouse;
 use Doctrine\ORM\EntityRepository;
 use Dot\DependencyInjection\Attribute\Entity;
+use Api\Cabinet\Entity\Cabinet;
+use Doctrine\ORM\EntityManager;
 
 #[Entity(name: Warehouse::class)]
 class WarehouseRepository extends EntityRepository
 {
+    public function __construct(EntityManager $em)
+    {
+        parent::__construct($em, $em->getClassMetadata(Warehouse::class));
+    }
+
     public function save(Warehouse $warehouse): Warehouse
     {
         $this->getEntityManager()->persist($warehouse);
@@ -36,5 +45,10 @@ class WarehouseRepository extends EntityRepository
         $qb->getQuery()->useQueryCache(true);
 
         return new WarehouseCollection($qb, false);
+    }
+
+    public function findByCabinet(Cabinet $cabinet): array
+    {
+        return $this->findBy(['cabinet' => $cabinet]);
     }
 }
