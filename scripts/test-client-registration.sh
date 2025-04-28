@@ -9,6 +9,13 @@ NC='\033[0m' # No Color
 # URL API
 API_URL="https://dockernel-api.dvl.to/api/v1/client/register"
 
+# Заголовки для запросов
+HEADERS=(
+  "Content-Type: application/json"
+  "Accept: application/json"
+  "X-API-Key: test-api-key"  # Добавляем тестовый API ключ
+)
+
 echo -e "${YELLOW}Тестирование API регистрации клиента${NC}"
 echo "----------------------------------------"
 
@@ -17,9 +24,15 @@ echo -e "${YELLOW}Тест 1: Успешная регистрация${NC}"
 echo "Отправка запроса на $API_URL"
 echo "Данные: {\"identity\": \"testclient\", \"password\": \"TestPassword123\", \"cabinetName\": \"Тестовый кабинет\"}"
 
+# Формируем строку заголовков для curl
+HEADERS_STR=""
+for header in "${HEADERS[@]}"; do
+  HEADERS_STR="$HEADERS_STR -H '$header'"
+done
+
 RESPONSE=$(curl -s -X POST \
   $API_URL \
-  -H 'Content-Type: application/json' \
+  $HEADERS_STR \
   -d '{
     "identity": "testclient",
     "password": "TestPassword123",
@@ -28,7 +41,7 @@ RESPONSE=$(curl -s -X POST \
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   $API_URL \
-  -H 'Content-Type: application/json' \
+  $HEADERS_STR \
   -d '{
     "identity": "testclient",
     "password": "TestPassword123",
@@ -53,7 +66,7 @@ echo "Отправка запроса с некорректными данным
 
 RESPONSE=$(curl -s -X POST \
   $API_URL \
-  -H 'Content-Type: application/json' \
+  $HEADERS_STR \
   -d '{
     "identity": "te",
     "password": "123",
@@ -62,7 +75,7 @@ RESPONSE=$(curl -s -X POST \
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   $API_URL \
-  -H 'Content-Type: application/json' \
+  $HEADERS_STR \
   -d '{
     "identity": "te",
     "password": "123",
@@ -87,14 +100,14 @@ echo "Отправка запроса с отсутствующими полям
 
 RESPONSE=$(curl -s -X POST \
   $API_URL \
-  -H 'Content-Type: application/json' \
+  $HEADERS_STR \
   -d '{
     "identity": "testclient"
   }')
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   $API_URL \
-  -H 'Content-Type: application/json' \
+  $HEADERS_STR \
   -d '{
     "identity": "testclient"
   }')
