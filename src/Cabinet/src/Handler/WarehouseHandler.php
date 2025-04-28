@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Api\Cabinet\Handler;
 
 use Api\App\Handler\HandlerTrait;
-use Api\App\Logger\Log;
 use Api\Cabinet\Entity\Warehouse;
 use Api\Cabinet\InputFilter\WarehouseInputFilter;
 use Api\Cabinet\Service\WarehouseServiceInterface;
-use Api\User\Service\UserServiceInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -49,7 +47,6 @@ class WarehouseHandler implements RequestHandlerInterface
 
     public function getCollection(ServerRequestInterface $request): ResponseInterface
     {
-        Log::add('getCollection');
         $warehouses = $this->warehouseService->getRepository()->getWarehouses($request->getQueryParams());
 
         return $this->createResponse($request, $warehouses);
@@ -57,7 +54,6 @@ class WarehouseHandler implements RequestHandlerInterface
 
     public function post(ServerRequestInterface $request): ResponseInterface
     {
-        Log::add('post');
         $inputFilter = (new WarehouseInputFilter())->setData($request->getParsedBody());
         if (! $inputFilter->isValid()) {
             return $this->errorResponse($inputFilter->getMessages(), StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
