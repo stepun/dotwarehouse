@@ -30,23 +30,18 @@ for header in "${HEADERS[@]}"; do
   HEADERS_STR="$HEADERS_STR -H '$header'"
 done
 
+# Данные для запроса
+REQUEST_DATA='{"identity":"testclient","password":"TestPassword123","cabinetName":"Тестовый кабинет"}'
+
 RESPONSE=$(curl -s -X POST \
   $API_URL \
   $HEADERS_STR \
-  -d '{
-    "identity": "testclient",
-    "password": "TestPassword123",
-    "cabinetName": "Тестовый кабинет"
-  }')
+  -d "$REQUEST_DATA")
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   $API_URL \
   $HEADERS_STR \
-  -d '{
-    "identity": "testclient",
-    "password": "TestPassword123",
-    "cabinetName": "Тестовый кабинет"
-  }')
+  -d "$REQUEST_DATA")
 
 if [ "$STATUS_CODE" -eq 201 ]; then
   echo -e "${GREEN}Успешно! Код ответа: $STATUS_CODE${NC}"
@@ -64,23 +59,18 @@ echo "----------------------------------------"
 echo -e "${YELLOW}Тест 2: Ошибка валидации${NC}"
 echo "Отправка запроса с некорректными данными"
 
+# Данные для запроса с ошибками
+REQUEST_DATA='{"identity":"te","password":"123","cabinetName":"Те"}'
+
 RESPONSE=$(curl -s -X POST \
   $API_URL \
   $HEADERS_STR \
-  -d '{
-    "identity": "te",
-    "password": "123",
-    "cabinetName": "Те"
-  }')
+  -d "$REQUEST_DATA")
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   $API_URL \
   $HEADERS_STR \
-  -d '{
-    "identity": "te",
-    "password": "123",
-    "cabinetName": "Те"
-  }')
+  -d "$REQUEST_DATA")
 
 if [ "$STATUS_CODE" -eq 400 ]; then
   echo -e "${GREEN}Успешно! Код ответа: $STATUS_CODE${NC}"
@@ -98,19 +88,18 @@ echo "----------------------------------------"
 echo -e "${YELLOW}Тест 3: Отсутствие обязательных полей${NC}"
 echo "Отправка запроса с отсутствующими полями"
 
+# Данные для запроса с отсутствующими полями
+REQUEST_DATA='{"identity":"testclient"}'
+
 RESPONSE=$(curl -s -X POST \
   $API_URL \
   $HEADERS_STR \
-  -d '{
-    "identity": "testclient"
-  }')
+  -d "$REQUEST_DATA")
 
 STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
   $API_URL \
   $HEADERS_STR \
-  -d '{
-    "identity": "testclient"
-  }')
+  -d "$REQUEST_DATA")
 
 if [ "$STATUS_CODE" -eq 400 ]; then
   echo -e "${GREEN}Успешно! Код ответа: $STATUS_CODE${NC}"
