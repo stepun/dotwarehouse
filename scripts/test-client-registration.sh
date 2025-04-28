@@ -38,11 +38,11 @@ STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
 if [ "$STATUS_CODE" -eq 201 ]; then
   echo -e "${GREEN}Успешно! Код ответа: $STATUS_CODE${NC}"
   echo "Ответ:"
-  echo $RESPONSE | python -m json.tool
+  echo $RESPONSE
 else
   echo -e "${RED}Ошибка! Код ответа: $STATUS_CODE${NC}"
   echo "Ответ:"
-  echo $RESPONSE | python -m json.tool
+  echo $RESPONSE
 fi
 
 echo "----------------------------------------"
@@ -72,11 +72,11 @@ STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
 if [ "$STATUS_CODE" -eq 400 ]; then
   echo -e "${GREEN}Успешно! Код ответа: $STATUS_CODE${NC}"
   echo "Ответ:"
-  echo $RESPONSE | python -m json.tool
+  echo $RESPONSE
 else
   echo -e "${RED}Ошибка! Код ответа: $STATUS_CODE${NC}"
   echo "Ответ:"
-  echo $RESPONSE | python -m json.tool
+  echo $RESPONSE
 fi
 
 echo "----------------------------------------"
@@ -102,11 +102,11 @@ STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
 if [ "$STATUS_CODE" -eq 400 ]; then
   echo -e "${GREEN}Успешно! Код ответа: $STATUS_CODE${NC}"
   echo "Ответ:"
-  echo $RESPONSE | python -m json.tool
+  echo $RESPONSE
 else
   echo -e "${RED}Ошибка! Код ответа: $STATUS_CODE${NC}"
   echo "Ответ:"
-  echo $RESPONSE | python -m json.tool
+  echo $RESPONSE
 fi
 
 echo "----------------------------------------"
